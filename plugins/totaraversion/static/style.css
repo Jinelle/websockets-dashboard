@@ -2,6 +2,7 @@ div#totaraversion h1 {
     color: #fff;
     text-color: #000;
 }
+
 div#totaraversion {
     color: #fff;
     text-shadow: 0 0 0.3em #000;
@@ -91,17 +92,29 @@ div#totaraversion table.status tr td:nth-child(8) {
 }
 
 div#totaraversion div.itemTotalsTitle {
-  display: none;
+    display: none;
 }
 
-body.dashboard-fullscreen div#totaraversion h2 {
-    font-size: 250%;
+body.dashboard-fullscreen div#totaraversion > div {
+    font-size: 200%;
 }
 
-body.dashboard-fullscreen div#totaraversion ul li {
-    font-size: 120%;
+#totaraversion > div {
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1.5em;
+    clear: both;
+    padding-left: 1em;
 }
 
-body.dashboard-fullscreen div#totaraversion table.status {
-    font-size: 250%;
+#totaraversion .versiontitle, #moodleversion .laggingcount {
+    padding: 2px;
+}
+
+#totaraversion > div > div {
+    padding-left: 2em;
+}
+
+#totaraversion div > span {
+    padding: 0 5px 0 0;
 }

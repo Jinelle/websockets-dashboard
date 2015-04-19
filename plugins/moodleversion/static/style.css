@@ -4,7 +4,7 @@ div#moodleversion {
 
 div#moodleversion h1 {
     color: #fff;
-    text-color: #000
+    text-color: black;
 }
 
 div#moodleversion .OK {
@@ -14,6 +14,7 @@ div#moodleversion .OK {
 div#moodleversion .CRITICAL {
     background-color: #f00;
 }
+
 div#moodleversion .Critical {
     background-color: #f00;
 }
@@ -94,17 +95,29 @@ div#moodleversion table.status tr td:nth-child(8) {
 }
 
 div#moodleversion div.itemTotalsTitle {
-  display: none;
+    display: none;
 }
 
-body.dashboard-fullscreen div#moodleversion h2 {
-    font-size: 250%;
+body.dashboard-fullscreen div#moodleversion > div {
+    font-size: 200%;
 }
 
-body.dashboard-fullscreen div#moodleversion ul li {
-    font-size: 120%;
+#moodleversion > div {
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1.5em;
+    clear: both;
+    padding-left: 1em;
 }
 
-body.dashboard-fullscreen div#moodleversion table.status {
-    font-size: 250%;
+#moodleversion .versiontitle, #moodleversion .laggingcount {
+    padding: 2px;
+}
+
+#moodleversion > div > div {
+    padding-left: 2em;
+}
+
+#moodleversion div > span {
+    padding: 0 5px 0 0;
 }
