@@ -155,6 +155,9 @@ class ClientSocketHandler(tornado.websocket.WebSocketHandler):
         return data
 
     def check_origin(self, origin):
+        print "http://+<host>: http://" + host
+        print "origin: " + origin
+        return True
         return 'http://'+host == origin
 
 
