@@ -92,7 +92,7 @@ plugins.totaraversion = {
                 if (laggingsites.length == 1) {
                     laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">1 site</span>'
                 } else {
-                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">' + laggingsites.count + ' sites</span>'
+                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">' + laggingsites.length + ' sites</span>'
                 }
             }
             laggingdiv = laggingdiv + ' behind the latest security release.</span></div>'
