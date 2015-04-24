@@ -57,47 +57,34 @@ plugins.totaraversion = {
                 versiontitle.addClass('OK')
             }
 
-            var supportstring = ''
-            if (versioninfo.supportdays > 0) {
-                supportstring = ' Security support ends in ' + versioninfo.supportdays + ' day'
-                if (versioninfo.supportdays > 0) {
-                    supportstring = supportstring + 's' // Plural
-                }
-                supportstring = supportstring + '.'
-            } else {
-                supportstring = ' Security support ended ' + (-versioninfo.supportdays)
-                if (versioninfo.supportdays == 0) {
-                    supportstring = supportstring + ' today.'
-                } else if (versioninfo.supportdays == -1) {
-                    supportstring = supportstring + ' day ago.'
-                } else { // ie (versioninfo.supportdays < -1) {
-                    supportstring = supportstring + ' days ago.'
-                }
+            var supportstring = ' ' + versioninfo.supportdays + ' day'
+            if (versioninfo.supportdays != 1) {
+                supportstring = supportstring + 's' // Plural.
             }
+            supportstring = supportstring + '.'
             supportstring = '<span class="supportperiod">' + supportstring + '</span>'
             var supportspan = $( 'div#' + escapeddivid + ' span.supportperiod' )
             versiondiv.append(supportstring)
 
-            var latestreleaseinfo = '<span class="latestrelease">Latest security release: ' + versioninfo.latestsecurity + '.</span>'
+            var latestreleaseinfo = '<span class="latestrelease">LSR: ' + versioninfo.latestsecurity + '.</span>'
             versiondiv.append(latestreleaseinfo)
-            var sitesonlatest = '<span class="latestcount">Sites on latest security release: ' + versioninfo.onlatestsecurity + '.</span>'
+            var sitesonlatest = '<span class="latestcount">SE-LSR: ' + versioninfo.onlatestsecurity + '.</span>'
             versiondiv.append(sitesonlatest)
+            var laggingsummary = '<span class="laggingsummary">S-!LSR: '
+            var laggingsites = versioninfo.behindlatest
+            if (laggingsites.length == 0) {
+                laggingsummary = laggingsummary + '<span class="laggingcount OK"> '
+            } else {
+                laggingsummary = laggingsummary + '<span class="laggingcount CRITICAL"> '
+            }
+            laggingsummary = laggingsummary + laggingsites.length + ' </span>';
+            versiondiv.append(laggingsummary)
 
             // Create a section 'lagging div' to describe if there are any sites lagging behind the latest security release, and which ones.
-            var laggingsites = versioninfo.behindlatest
-            var laggingdiv = '<div class="behindlatest"><span class="laggingsummary">'
-            if (laggingsites.length == 0) {
-                    laggingdiv = laggingdiv + '<span class="laggingcount OK">0 sites</span>'
-            } else {
-                if (laggingsites.length == 1) {
-                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">1 site</span>'
-                } else {
-                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">' + laggingsites.length + ' sites</span>'
-                }
-            }
-            laggingdiv = laggingdiv + ' behind the latest security release.</span></div>'
-            versiondiv.append(laggingdiv)
             if (laggingsites.length) {
+                var laggingdiv = '<div class="behindlatest">'
+                laggingdiv = laggingdiv + '</div>'
+                versiondiv.append(laggingdiv)
                 // There is at least one site lagging behind the latest security release. Add an unnumbered list to this div.
                 var laggingdiv = $( 'div#' + escapeddivid + ' div.behindlatest' )
                 var lagginglist = '<ul></ul>'
@@ -107,7 +94,7 @@ plugins.totaraversion = {
     
                 for (i in laggingsites) {
                     var laggingsite = laggingsites[i]
-                    laggingstring = '<li><span class="laggingsite">' + laggingsite.dbname + '</span> ( <span class="laggingversion">' + laggingsite.version + '</span> )</li>'
+                    laggingstring = '<li><span class="laggingsite">' + laggingsite.dbname + '</span> (<span class="laggingversion">' + laggingsite.version + '</span>)</li>'
                     lagginglist.append(laggingstring)
                 }
             }
