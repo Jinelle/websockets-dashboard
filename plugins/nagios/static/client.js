@@ -47,7 +47,6 @@ plugins.nagios = {
         }
 
         var container = $('div#nagios');
-        var existing = $('li', container).clone();
 
         // Only care about the newest message
         data = data.pop();
