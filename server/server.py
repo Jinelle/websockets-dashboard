@@ -28,6 +28,7 @@ import tornado.websocket
 import os.path
 import uuid
 import glob
+import re
 
 from tornado.options import define, options
 
@@ -155,7 +156,7 @@ class ClientSocketHandler(tornado.websocket.WebSocketHandler):
         return data
 
     def check_origin(self, origin):
-        return 'http://'+host == origin
+        return bool(re.match(r'http(?:s?)://'+host+'(/|:|$)', origin))
 
 
 def get_plugins():
