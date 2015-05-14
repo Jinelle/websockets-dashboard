@@ -84,24 +84,24 @@ plugins.moodleversion = {
                 supportspan.replaceWith(supportstring)
             }
 
-            var latestreleaseinfo = '<span class="latestrelease">Latest security release: ' + versioninfo.latestsecurity + '.</span>'
+            var latestreleaseinfo = '<span class="latestrelease">LSR: ' + versioninfo.latestsecurity + '.</span>'
             versiondiv.append(latestreleaseinfo)
-            var sitesonlatest = '<span class="latestcount">Sites on latest security release: ' + versioninfo.onlatestsecurity + '.</span>'
+            var sitesonlatest = '<span class="latestcount">SE-LSR: ' + versioninfo.onlatestsecurity + '.</span>'
             versiondiv.append(sitesonlatest)
 
             // Create a section 'lagging div' to describe if there are any sites lagging behind the latest security release, and which ones.
             var laggingsites = versioninfo.behindlatest
             var laggingdiv = '<div class="behindlatest"><span class="laggingsummary">'
             if (laggingsites.length == 0) {
-                    laggingdiv = laggingdiv + '<span class="laggingcount OK">0 sites</span>'
+                    laggingdiv = laggingdiv + '<span class="laggingcount OK">SE!LSR:0</span>'
             } else {
                 if (laggingsites.length == 1) {
-                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">1 site</span>'
+                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">SE!LSR:1</span>'
                 } else {
-                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">' + laggingsites.count + ' sites</span>'
+                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">SE!LSR' + laggingsites.length + '</span>'
                 }
             }
-            laggingdiv = laggingdiv + ' behind the latest security release.</span></div>'
+            laggingdiv = laggingdiv + '</span></div>'
             versiondiv.append(laggingdiv)
             if (laggingsites.length) {
                 // There is at least one site lagging behind the latest security release. Add an unnumbered list to this div.
