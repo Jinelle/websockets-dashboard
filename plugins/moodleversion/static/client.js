@@ -57,23 +57,7 @@ plugins.moodleversion = {
                 versiontitle.addClass('OK')
             }
 
-            var supportstring = ''
-            if (versioninfo.supportdays > 0) {
-                supportstring = ' Security support ends in ' + versioninfo.supportdays + ' day'
-                if (versioninfo.supportdays > 0) {
-                    supportstring = supportstring + 's' // Plural
-                }
-                supportstring = supportstring + '.'
-            } else {
-                supportstring = ' Security support ended ' + (-versioninfo.supportdays)
-                if (versioninfo.supportdays == 0) {
-                    supportstring = supportstring + ' today.'
-                } else if (versioninfo.supportdays == -1) {
-                    supportstring = supportstring + ' day ago.'
-                } else { // ie (versioninfo.supportdays < -1) {
-                    supportstring = supportstring + ' days ago.'
-                }
-            }
+            var supportstring = ' ' + versioninfo.supportdays + ' days.'
             supportstring = '<span class="supportperiod">' + supportstring + '</span>'
             var supportspan = $( 'div#' + escapeddivid + ' span.supportperiod' )
             if (supportspan.length == 0) {
@@ -90,20 +74,21 @@ plugins.moodleversion = {
             versiondiv.append(sitesonlatest)
 
             // Create a section 'lagging div' to describe if there are any sites lagging behind the latest security release, and which ones.
+            var laggingsummary = '<span class="laggingsummary">SE!LSR: '
             var laggingsites = versioninfo.behindlatest
-            var laggingdiv = '<div class="behindlatest"><span class="laggingsummary">'
             if (laggingsites.length == 0) {
-                    laggingdiv = laggingdiv + '<span class="laggingcount OK">SE!LSR:0</span>'
+                laggingsummary = laggingsummary + '<span class="laggingcount OK"> '
             } else {
-                if (laggingsites.length == 1) {
-                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">SE!LSR:1</span>'
-                } else {
-                    laggingdiv = laggingdiv + '<span class="laggingcount CRITICAL">SE!LSR' + laggingsites.length + '</span>'
-                }
+                laggingsummary = laggingsummary + '<span class="laggingcount CRITICAL"> '
             }
-            laggingdiv = laggingdiv + '</span></div>'
-            versiondiv.append(laggingdiv)
+            laggingsummary = laggingsummary + laggingsites.length + ' </span>';
+            versiondiv.append(laggingsummary)
+
+            // Create a section 'lagging div' to describe if there are any sites lagging behind the latest security release, and which ones.
             if (laggingsites.length) {
+                var laggingdiv = '<div class="behindlatest">'
+                laggingdiv = laggingdiv + '</div>'
+                versiondiv.append(laggingdiv)
                 // There is at least one site lagging behind the latest security release. Add an unnumbered list to this div.
                 var laggingdiv = $( 'div#' + escapeddivid + ' div.behindlatest' )
                 var lagginglist = '<ul></ul>'
@@ -113,7 +98,7 @@ plugins.moodleversion = {
     
                 for (i in laggingsites) {
                     var laggingsite = laggingsites[i]
-                    laggingstring = '<li><span class="laggingsite">' + laggingsite.dbname + '</span> ( <span class="laggingversion">' + laggingsite.version + '</span> )</li>'
+                    laggingstring = '<li><span class="laggingsite">' + laggingsite.dbname + '</span> (<span class="laggingversion">' + laggingsite.version + '</span>)</li>'
                     lagginglist.append(laggingstring)
                 }
             }

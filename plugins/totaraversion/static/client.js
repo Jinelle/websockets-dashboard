@@ -57,6 +57,9 @@ plugins.totaraversion = {
                 versiontitle.addClass('OK')
             }
 
+            if (versioninfo.supportdays == null) {
+                versioninfo.supportdays = '?';
+            }
             var supportstring = ' ' + versioninfo.supportdays + ' day'
             if (versioninfo.supportdays != 1) {
                 supportstring = supportstring + 's' // Plural.
