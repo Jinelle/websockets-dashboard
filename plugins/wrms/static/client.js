@@ -49,9 +49,6 @@ plugins.wrms = {
             // Setup date
             var lastchanged = $('<span>Last changed: </span>').attr('title', d.toDateString()+' '+d.toTimeString());
             var abbr = $('<abbr class="timeago"></abbr>').attr('title', d.toISOString());
-            if (abbr.timeago) {
-                abbr.timeago();
-            }
 
             var node = $('<li>').attr('id', id).attr('class', c).data('date', content.last_activity_epoch);
             node.append(link).append(' - ').append(status).append(lastchanged).append(abbr);
@@ -63,6 +60,9 @@ plugins.wrms = {
             }
 
             container.prepend(node);
+            if (abbr.timeago) {
+                abbr.timeago();
+            }
             if ($('li', container).length > 20) {
                 $('li:last', container).slideUp().remove();
             }
