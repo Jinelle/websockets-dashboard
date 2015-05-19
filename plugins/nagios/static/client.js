@@ -109,7 +109,7 @@ plugins.nagios = {
             lc.setTime(data['states'][c][1] * 1000);
 
             // Create new abbr and replace old (timeago plugin doesn't like the time changing)
-            var abbr = $('<abbr class="timeago"></abbr>').attr('title', lc.toISOString()).timeago();
+            var abbr = $('<abbr class="timeago"></abbr>').attr('title', lc.toISOString());
             group.find('h2').attr('title', lc.toDateString()+' '+lc.toTimeString());
 
             // Replace, or add new
@@ -117,6 +117,9 @@ plugins.nagios = {
                 group.find('h2 abbr').replaceWith(abbr);
             } else {
                 group.find('h2').append(abbr);
+            }
+            if (abbr.timeago) {
+                abbr.timeago();
             }
         }
     }
