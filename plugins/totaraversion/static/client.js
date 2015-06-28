@@ -69,11 +69,11 @@ plugins.totaraversion = {
             var supportspan = $( 'div#' + escapeddivid + ' span.supportperiod' )
             versiondiv.append(supportstring)
 
-            var latestreleaseinfo = '<span class="latestrelease">LSR: ' + versioninfo.latestsecurity + '.</span>'
+            var latestreleaseinfo = '<span class="latestrelease" title="Latest Security Release">LSR: ' + versioninfo.latestsecurity + '.</span>'
             versiondiv.append(latestreleaseinfo)
-            var sitesonlatest = '<span class="latestcount">SE-LSR: ' + versioninfo.onlatestsecurity + '.</span>'
+            var sitesonlatest = '<span class="latestcount" title="SiteEnvironments on LSR">SE-LSR: ' + versioninfo.onlatestsecurity + '.</span>'
             versiondiv.append(sitesonlatest)
-            var laggingsummary = '<span class="laggingsummary">S-!LSR: '
+            var laggingsummary = '<span class="laggingsummary" title="Sites not entirely on LSR">S-!LSR: '
             var laggingsites = versioninfo.behindlatest
             if (laggingsites.length == 0) {
                 laggingsummary = laggingsummary + '<span class="laggingcount OK"> '
