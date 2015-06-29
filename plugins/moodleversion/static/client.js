@@ -70,7 +70,7 @@ plugins.moodleversion = {
 
             var latestreleaseinfo = '<span class="latestrelease" title="Latest Security Release">LSR: ' + versioninfo.latestsecurity + '.</span>'
             versiondiv.append(latestreleaseinfo)
-            var sitesonlatest = '<span class="latestcount" title="SiteEnvironments not on LSR">SE-LSR: ' + versioninfo.onlatestsecurity + '.</span>'
+            var sitesonlatest = '<span class="latestcount" title="SiteEnvironments on LSR">SE-LSR: ' + versioninfo.onlatestsecurity + '.</span>'
             versiondiv.append(sitesonlatest)
 
             // Create a section 'lagging div' to describe if there are any sites lagging behind the latest security release, and which ones.
