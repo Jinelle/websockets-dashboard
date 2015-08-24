@@ -15,9 +15,15 @@ div#totaraversion .OK {
 div#totaraversion .Critical {
     background-color: #f00;
 }
+div#totaraversion .Critical.prerelease {
+    background-color: #a00;
+}
 
 .laggingversion {
     background-color: #f00;
+}
+.laggingversion.freshprerelease{
+    background-color: #a00;
 }
 
 div#totaraversion .Warning {

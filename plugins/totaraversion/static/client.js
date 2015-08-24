@@ -56,6 +56,9 @@ plugins.totaraversion = {
             } else {
                 versiontitle.addClass('OK')
             }
+            if (versioninfo.prerelease) {
+                versiontitle.addClass('prerelease')
+            }
 
             if (versioninfo.supportdays == null) {
                 versioninfo.supportdays = '?';
@@ -97,7 +100,12 @@ plugins.totaraversion = {
     
                 for (i in laggingsites) {
                     var laggingsite = laggingsites[i]
-                    laggingstring = '<li><span class="laggingsite">' + laggingsite.dbname + '</span> (<span class="laggingversion">' + laggingsite.version + '</span>)</li>'
+                    if (laggingsite.freshbuild && versioninfo.prerelease) {
+                        laggingclass = 'class="laggingversion freshprerelease"'
+                    } else {
+                        laggingclass = 'class="laggingversion"'
+                    }
+                    laggingstring = '<li><span class="laggingsite">' + laggingsite.dbname + '</span> (<span ' + laggingclass  + '>' + laggingsite.version + '</span>)</li>'
                     lagginglist.append(laggingstring)
                 }
             }
