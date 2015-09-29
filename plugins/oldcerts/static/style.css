@@ -1,0 +1,32 @@
+div#oldcerts h1,
+div#oldcerts strong {
+    color: #fff;
+}
+div#oldcerts span.expired {
+    color: red;
+    float: right;
+}
+
+div#oldcerts span.almostexpires {
+    color: orange;
+    float: right;
+}
+
+
+.dashboard-fullscreen div#oldcerts {
+    font-size: 32px;
+}
+
+.dashboard-fullscreen div#oldcerts > ol > li {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+div#oldcerts li {
+    padding: 4px 0;
+    border-bottom: 1px solid #999;
+    overflow: auto;
+    font-size: 110%;
+    margin-bottom: 1px;
+    color: #fff;
+}
