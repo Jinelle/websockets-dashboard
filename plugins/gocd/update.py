@@ -26,7 +26,7 @@ def setup_config():
     conf = ConfigParser.ConfigParser()
     conf.readfp(open(path))
 
-    CONFIG['apiurl'] = conf.get('general', 'apiurl')
+    CONFIG['gourl'] = conf.get('general', 'gourl')
     CONFIG['username'] = conf.get('general', 'username')
     CONFIG['password'] = conf.get('general', 'password')
 
@@ -56,44 +56,63 @@ def html_escape(text):
 
     return "".join(html_escape_table.get(c,c) for c in text)
 
+def get_failed_stages(stages):
+    failedstages = []
+    for stage in stages:
+        if not 'result' in stage:
+            print "no result for stage %s yet" % stage['name']
+            continue
+        if stage['result'] == 'Failed':
+            failedstages.append(html_escape(stage['name']))
+
+    return failedstages
+
+
+def blame_someone(pipeline_history):
+    toblame = ''
+    for pipe in pipeline_history:
+        failedstages = get_failed_stages(pipe['stages'])
+        if len(failedstages) != 0 and 'runtests' in failedstages:
+            toblame = pipe['build_cause']['material_revisions'][0]['modifications'][0]['user_name']
+        else:
+            return toblame
+
+    return toblame
 
 def main():
     global CONFIG
     setup_config()
 
-    url = CONFIG['apiurl']
+    apiurl = "%s/go/api" % CONFIG['gourl']
     creds = (CONFIG['username'], CONFIG['password'])
 
     while 1:
         try:
-            r = requests.get(url+'/config/pipeline_groups', auth=creds, verify=False)
+            r = requests.get(apiurl+'/config/pipeline_groups', auth=creds, verify=False)
             failedpipes = []
 
             for group in r.json():
                 print "group:", group['name']
                 for pipeline in group['pipelines']:
-                    #time.sleep(1)  #no dossss
+                    time.sleep(0.5)  #no dossss
                     print "checking pipe:", pipeline['name']
-                    history = requests.get(url+"/pipelines/%s/history/0" % pipeline['name'], auth=creds, verify=False)
+                    history = requests.get(apiurl+"/pipelines/%s/history/0" % pipeline['name'], auth=creds, verify=False)
                     history = history.json()
                     if len(history['pipelines']) == 0:
                         print "no pipeline instances yet"
                         continue
 
                     try:
-                        failedstages = []
-                        for stage in history['pipelines'][0]['stages']:
-                            if not 'result' in stage:
-                                print "no result for stage %s yet" % stage['name']
-                                continue
-                            if stage['result'] == 'Failed':
-                                failedstages.append(html_escape(stage['name']))
-
-                            if len(failedstages) != 0:
-                                failedpipes.append({'pipename': html_escape(pipeline['name']), 'failedstages': ', '.join(failedstages)})
-                    except:
-                        e = sys.exc_info()[0]
-                        print "something went oopsie while checking pipeline %s: %s" % (pipeline['name'], e)
+                        failedstages = get_failed_stages(history['pipelines'][0]['stages'])
+                        if len(failedstages) != 0:
+                            failedpipes.append({
+                                'toblame': html_escape(blame_someone(history['pipelines'])),
+                                'pipename': html_escape(pipeline['name']),
+                                'failedstages': ', '.join(failedstages),
+                                'url': '%s/go/tab/pipeline/history/%s' % (CONFIG['gourl'], pipeline['name'])})
+                    except Exception as e:
+                        print "something went oopsie while checking pipeline %s: " % pipeline['name']
+                        logging.exception(e)
                         continue
 
             # push, push push!
@@ -103,7 +122,7 @@ def main():
             print 'Exceptional exception!'
             logging.exception(e)
 
-        time.sleep(300)
+        time.sleep(120)
 
 if __name__ == "__main__":
     main()

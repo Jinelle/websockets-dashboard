@@ -11,15 +11,16 @@ plugins.gocd = {
 
         var container = $('div#gocd ol');
         container.html('');
-        console.log(data[0].failedpipes);
 
         // update builds
         for (c in data[0].failedpipes) {
             var content = data[0].failedpipes[c];
 
-            //var link = $('<a>').attr('href', href).html(name);
-            var node = $('<li>'+content.pipename+' (<span class="failedstages">'+content.failedstages+'</span>)</li>');
-            //node.html(link);
+            var link = $('<a></a>').attr('href', content.url).html(content.pipename);
+            var node = $('<li></li>');
+            var failedstages = $('<span class="failedstages"></span>').html(' ('+content.failedstages+')');
+            var toblame = $('<div class="toblame"></div>').html(content.toblame);
+            node.html(link).append(failedstages).append(toblame);
             node.hide();
 
             container.append(node);

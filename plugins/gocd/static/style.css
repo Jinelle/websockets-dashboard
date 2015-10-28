@@ -1,10 +1,19 @@
 div#gocd h1,
+div#gocd a,
 div#gocd strong {
     color: #fff;
 }
 
 div#gocd li span.failedstages {
     color: red;
+}
+
+div#gocd div.toblame {
+    padding-top: 3px;
+    padding-left: 7px;
+    font-size: 55%;
+    color: #d3d4d4;
+    display: inline;
 }
 
 .dashboard-fullscreen div#gocd {
